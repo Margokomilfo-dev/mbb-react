@@ -1,29 +1,21 @@
 import React from 'react'
-import './App.css'
-import { ProductType } from './api'
+import { Products } from './components/Products'
+import 'antd/dist/antd.css'
+import styled from 'styled-components'
 
 function App() {
-    return <div className="App">hello world</div>
+    return (
+        <div style={{ backgroundColor: '#f7f5f5' }}>
+            <Wrapper>
+                <Products />
+            </Wrapper>
+        </div>
+    )
 }
 
 export default App
 
-type PropsType = {
-    product: ProductType
-}
-
-const Product = (props: PropsType) => {
-    return (
-        <div>
-            <div>id: {props.product._id}</div>
-            <div>name: {props.product.name}</div>
-            <div>
-                <img src={props.product.image} alt="" />
-            </div>
-            <span>calories: {props.product.calories}</span>
-            <span>carbs: {props.product.carbs}</span>
-            <span>proteins: {props.product.proteins}</span>
-            <span>fats: {props.product.fats}</span>
-        </div>
-    )
-}
+const Wrapper = styled.div`
+    max-width: 1100px;
+    margin: 0 auto;
+`
