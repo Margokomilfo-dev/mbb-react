@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { api, ModelType, ProductType } from '../api'
+import { api, ProductType } from '../api/api'
 
 export const getProducts = createAsyncThunk(
     'product/getProducts',
@@ -24,23 +24,11 @@ export const getProductsByName = createAsyncThunk(
         }
     }
 )
-export const createProduct = createAsyncThunk(
-    'product/createProduct',
-    async (model: ModelType, { dispatch, rejectWithValue }) => {
-        try {
-            const res = await api.createProduct(model)
-            dispatch(getProducts(0))
-            return
-        } catch (e) {
-            return rejectWithValue('getProductsByType - error')
-        }
-    }
-)
 
 const slice = createSlice({
     name: 'app',
     initialState: {
-        products: null,
+        products: [],
         product: null,
     } as ProductReducerType,
     reducers: {
@@ -77,6 +65,6 @@ export const { setLoading } = slice.actions
 export const productReducer = slice.reducer
 
 export type ProductReducerType = {
-    products: null | Array<ProductType>
+    products: Array<ProductType>
     product: null | ProductType
 }

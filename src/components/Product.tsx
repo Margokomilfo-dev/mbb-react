@@ -1,5 +1,5 @@
 import React from 'react'
-import { ProductType } from '../api'
+import { ProductType } from '../api/api'
 import styled from 'styled-components'
 
 type PropsType = {
