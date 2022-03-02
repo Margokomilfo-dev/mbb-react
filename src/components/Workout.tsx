@@ -9,7 +9,6 @@ import wrapper2 from '../images/workouts/wrapper2.png'
 import wrapper3 from '../images/workouts/wrapper3.png'
 import wrapper4 from '../images/workouts/wrapper4.png'
 import wrapper5 from '../images/workouts/wrapper5.png'
-import wrapper6 from '../images/workouts/wrapper6.png'
 import { WorkoutCategory } from '../settings/types'
 
 type PropsType = {
@@ -35,7 +34,11 @@ export const Workout = (props: PropsType) => {
                                 ? wrapper4
                                 : id === 5
                                 ? wrapper5
-                                : wrapper6
+                                : id === 6
+                                ? wrapper0
+                                : id === 7
+                                ? wrapper1
+                                : wrapper2
                         }
                         alt=""
                     />

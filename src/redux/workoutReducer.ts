@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { api, ProductType, WorkoutType } from '../api/api'
+import { api, WorkoutType } from '../api/api'
 
 export const getWorkoutsByCategory = createAsyncThunk(
     'workout/getWorkouts',
@@ -49,10 +49,11 @@ const slice = createSlice({
         workouts: [],
         workout: null,
         workoutsForDay: null,
+        currentType: 0,
     } as WorkoutReducerType,
     reducers: {
-        setProduct_(state, action: PayloadAction<{ product: ProductType }>) {
-            // state.recipesProducts.unshift(action.payload.product)
+        setCurrentType(state, action: PayloadAction<{ type: number }>) {
+            state.currentType = action.payload.type
         },
     },
     extraReducers: (builder) => {
@@ -71,11 +72,12 @@ const slice = createSlice({
     },
 })
 
-export const { setProduct_ } = slice.actions
+export const { setCurrentType } = slice.actions
 export const workoutReducer = slice.reducer
 
 export type WorkoutReducerType = {
     workouts: null | Array<WorkoutType>
     workout: null | WorkoutType
     workoutsForDay: null | WorkoutType | string
+    currentType: number
 }

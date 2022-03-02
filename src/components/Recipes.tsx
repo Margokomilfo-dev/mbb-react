@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { Select } from 'antd'
-import {
-    MealsCategory,
-    MenuCategory,
-    MenuFor,
-    ProductCategory,
-} from '../settings/types'
+import { MealsCategory, MenuCategory, MenuFor } from '../settings/types'
 import {
     getRecipesByMenuByType,
-    getRecipesByType,
     RecipeReducerType,
+    setRecipeMealType,
+    setRecipeMenuType,
 } from '../redux/recipeReducer'
 import { AllStateType } from '../redux/store'
 import { RecipeSmall } from './RecipeSmall'
@@ -22,25 +18,28 @@ type PropsType = {
 const { Option } = Select
 export const Recipes = (props: PropsType) => {
     const dispatch = useDispatch()
-    const [menu, setMenu] = useState<number>(0)
-    const [meal, setMeal] = useState<number>(0)
-    const { recipes } = useSelector<AllStateType, RecipeReducerType>(
-        (state) => state.recipes
-    )
+    const { recipes, recipeMealType, recipeMenuType } = useSelector<
+        AllStateType,
+        RecipeReducerType
+    >((state) => state.recipes)
+
     useEffect(() => {
-        if (!menu && !meal) {
-            dispatch(getRecipesByType(0))
-        } else dispatch(getRecipesByMenuByType({ menu, type: meal }))
-    }, [menu, meal])
+        dispatch(
+            getRecipesByMenuByType({
+                menu: recipeMenuType,
+                type: recipeMealType,
+            })
+        )
+    }, [recipeMealType, recipeMenuType])
 
     const handleChangeMeals = (type) => {
-        setMeal(type)
+        dispatch(setRecipeMealType({ type }))
     }
     const handleChangeFor = (type) => {
         console.log(type)
     }
     const handleChangeMenu = (type) => {
-        setMenu(type)
+        dispatch(setRecipeMenuType({ type }))
     }
 
     return (
@@ -49,7 +48,10 @@ export const Recipes = (props: PropsType) => {
                 <Select
                     style={{ width: 300 }}
                     onChange={handleChangeMenu}
-                    defaultValue={MenuCategory[0].name}
+                    defaultValue={
+                        MenuCategory.find((menu) => menu.id === recipeMenuType)
+                            .name
+                    }
                 >
                     {MenuCategory.map((p) => (
                         <Option value={p.id} key={p.id}>
@@ -60,7 +62,9 @@ export const Recipes = (props: PropsType) => {
                 <Select
                     style={{ width: 300 }}
                     onChange={handleChangeMeals}
-                    defaultValue={ProductCategory[0].name}
+                    defaultValue={
+                        MealsCategory.find((t) => t.id === recipeMealType).name
+                    }
                 >
                     {MealsCategory.map((p) => (
                         <Option value={p.id} key={p.id}>

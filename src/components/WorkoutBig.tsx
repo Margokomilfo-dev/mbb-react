@@ -85,24 +85,26 @@ export const WorkoutBig = () => {
                         />
                     </div>
                 </Block>
-                <Block>
-                    <iframe
-                        width="300"
-                        height="200"
-                        src={workout.stretching.link}
-                        frameBorder="0"
-                        allowFullScreen
-                    />
-                    <div>
-                        <div className={'title'}>Растяжка</div>
-                        <p
-                            className={'danger'}
-                            dangerouslySetInnerHTML={{
-                                __html: workout.stretching.description,
-                            }}
+                {workout.stretching && (
+                    <Block>
+                        <iframe
+                            width="300"
+                            height="200"
+                            src={workout.stretching.link}
+                            frameBorder="0"
+                            allowFullScreen
                         />
-                    </div>
-                </Block>
+                        <div>
+                            <div className={'title'}>Растяжка</div>
+                            <p
+                                className={'danger'}
+                                dangerouslySetInnerHTML={{
+                                    __html: workout.stretching.description,
+                                }}
+                            />
+                        </div>
+                    </Block>
+                )}
             </Blocks>
         </Wrapper>
     )

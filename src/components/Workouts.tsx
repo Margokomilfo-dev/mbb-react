@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     getWorkoutsByCategory,
+    setCurrentType,
     WorkoutReducerType,
 } from '../redux/workoutReducer'
 import { AllStateType } from '../redux/store'
@@ -13,20 +14,24 @@ import styled from 'styled-components'
 const { Option } = Select
 export const Workouts = () => {
     const dispatch = useDispatch()
-    const { workouts } = useSelector<AllStateType, WorkoutReducerType>(
-        (state) => state.workouts
-    )
+    const { workouts, currentType } = useSelector<
+        AllStateType,
+        WorkoutReducerType
+    >((state) => state.workouts)
     useEffect(() => {
-        dispatch(getWorkoutsByCategory(0))
+        dispatch(getWorkoutsByCategory(currentType))
     }, [])
 
     const handleChange = (val) => {
         dispatch(getWorkoutsByCategory(val))
+        dispatch(setCurrentType({ type: val }))
     }
     return (
         <div>
             <Select
-                defaultValue="Все"
+                defaultValue={
+                    WorkoutCategory.find((tr) => tr.id === currentType).name
+                }
                 style={{ minWidth: 300 }}
                 onChange={handleChange}
             >

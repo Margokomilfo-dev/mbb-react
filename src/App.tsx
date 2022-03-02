@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Products } from './components/Products'
 import 'antd/dist/antd.css'
 import { Menu } from 'antd'
@@ -10,14 +10,36 @@ import { RecipeBig } from './components/RecipeBig'
 import { Workouts } from './components/Workouts'
 import { WorkoutBig } from './components/WorkoutBig'
 import { Marathon } from './components/Marathon'
+import { useDispatch } from 'react-redux'
+import {
+    setCurrentDate,
+    setCurrentMenuType,
+    setCurrentWorkoutType,
+} from './redux/marathonReducer'
 
 function App() {
     const [current, setCurrent] = useState<string>('products')
-
+    const dispatch = useDispatch()
     const handleClick = (e: any) => {
         // @ts-ignore
         setCurrent({ current: e.key })
     }
+    useEffect(() => {
+        const menuType = localStorage.getItem('menuType')
+        const workoutType = localStorage.getItem('workoutType')
+        const started = localStorage.getItem('started')
+        if (menuType && workoutType) {
+            dispatch(setCurrentMenuType({ type: +menuType }))
+            dispatch(setCurrentWorkoutType({ type: +workoutType }))
+        }
+        if (started) {
+            const date = new Date(started)
+            const dayCount = new Date().getDay() - date.getDay()
+            if (dayCount <= 28) {
+                dispatch(setCurrentDate({ day: dayCount + 2 }))
+            } else dispatch(setCurrentDate({ day: null }))
+        }
+    }, [])
     return (
         <div style={{ backgroundColor: '#f7f5f5' }}>
             <Menu

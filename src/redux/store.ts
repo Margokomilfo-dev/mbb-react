@@ -4,11 +4,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import { productReducer } from './productReducer'
 import { recipeReducer } from './recipeReducer'
 import { workoutReducer } from './workoutReducer'
+import { marathonReducer } from './marathonReducer'
 
 let reducers = combineReducers({
     products: productReducer,
     recipes: recipeReducer,
     workouts: workoutReducer,
+    marathon: marathonReducer,
 })
 export type AllStateType = ReturnType<typeof reducers>
 

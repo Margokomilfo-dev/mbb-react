@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { api, ProductType, RandomRecipesForDay, RecipeType } from '../api/api'
+import { api, RandomRecipesForDay, RecipeType } from '../api/api'
 
 export const getRecipesByType = createAsyncThunk(
     'recipe/createRecipe',
@@ -62,10 +62,15 @@ const slice = createSlice({
         recipes: [],
         recipe: null,
         recipesForDay: null,
+        recipeMealType: 0,
+        recipeMenuType: 0,
     } as RecipeReducerType,
     reducers: {
-        setProduct_(state, action: PayloadAction<{ product: ProductType }>) {
-            // state.recipesProducts.unshift(action.payload.product)
+        setRecipeMealType(state, action: PayloadAction<{ type: number }>) {
+            state.recipeMealType = action.payload.type
+        },
+        setRecipeMenuType(state, action: PayloadAction<{ type: number }>) {
+            state.recipeMenuType = action.payload.type
         },
     },
     extraReducers: (builder) => {
@@ -84,13 +89,15 @@ const slice = createSlice({
     },
 })
 
-export const { setProduct_ } = slice.actions
+export const { setRecipeMealType, setRecipeMenuType } = slice.actions
 export const recipeReducer = slice.reducer
 
 export type RecipeReducerType = {
     recipes: null | Array<RecipeType>
     recipe: null | RecipeType
     recipesForDay: null | RandomRecipesForDay
+    recipeMealType: number
+    recipeMenuType: number
 }
 
 export type IngredientType = {
