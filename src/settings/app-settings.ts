@@ -29,7 +29,7 @@ class APISettings {
     constructor(private envVariables: EnvironmentVariable) {
         this.REACT_APP_API_BASE_URL =
             envVariables.REACT_APP_API_BASE_URL ||
-            'https://mbb-nest-api.herokuapp.com/api/'
+            'https://mbb-react.vercel.app'
         this.REACT_APP_PASSED_PERCENT = 50
     }
 }
