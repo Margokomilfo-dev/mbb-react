@@ -50,7 +50,6 @@ export const Products = () => {
     return (
         <>
             <Header>
-                <h1>Hello</h1>
                 <Select
                     defaultValue="Все"
                     style={{ minWidth: 220 }}

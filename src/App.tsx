@@ -42,6 +42,7 @@ function App() {
     }, [])
     return (
         <div style={{ backgroundColor: '#f7f5f5' }}>
+            <h1>tra!</h1>
             <Menu
                 onClick={handleClick}
                 selectedKeys={[current]}
